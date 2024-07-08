@@ -9,7 +9,8 @@ import com.example.sostavchisla.R
 import com.example.sostavchisla.databinding.FragmentGameBinding
 import com.example.sostavchisla.domain.Entity.GameResult
 import com.example.sostavchisla.domain.Entity.GameSettings
-import java.util.logging.Level
+import com.example.sostavchisla.domain.Entity.Level
+
 
 class GameFragment : Fragment() {
 
@@ -57,8 +58,9 @@ class GameFragment : Fragment() {
     companion object{
 
         private const val KEY_LEVEL = "level"
+        const val NAME ="GameFragment"
 
-        fun newInstance(level: com.example.sostavchisla.domain.Entity.Level): GameFragment{
+        fun newInstance(level: Level): GameFragment{
             return GameFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(KEY_LEVEL, level)
