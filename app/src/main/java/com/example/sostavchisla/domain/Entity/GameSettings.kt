@@ -1,6 +1,8 @@
 package com.example.sostavchisla.domain.Entity
 
+
 import java.io.Serializable
+
 
 data class GameSettings(
     val maxSumValue: Int,
