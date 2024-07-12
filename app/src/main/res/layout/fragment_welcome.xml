@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    tools:context=".UI.WelcomeFragment">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_margin="32dp"
+            android:src="@drawable/ic_b"
+            android:layout_gravity="center"
+            android:contentDescription="Welcome logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/tv_IIRaviLa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Состав числа"
+            android:layout_margin="16dp"
+            android:textSize="24sp"
+
+            />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/game_rules"
+            android:layout_margin="16dp"
+            />
+
+        <Button
+            android:id="@+id/buttonUnderstand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="Понятно"
+            android:layout_margin="16dp"
+            />
+
+
+</LinearLayout>
+
+
+
+
+</ScrollView>
