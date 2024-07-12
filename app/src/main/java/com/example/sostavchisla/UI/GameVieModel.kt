@@ -1,6 +1,7 @@
 package com.example.sostavchisla.UI
 
 import android.app.Application
+import android.content.Context
 import android.os.CountDownTimer
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -16,12 +17,13 @@ import com.example.sostavchisla.domain.GameRepositoryImpl
 import com.example.sostavchisla.domain.usecases.GenerateQuestionsUseCase
 import com.example.sostavchisla.domain.usecases.GetGameSettingsUseCase
 
-class GameVieModel(application: Application) : AndroidViewModel(application){
+class GameVieModel(
+    private val application: Application,
+    private val level: Level
+) : ViewModel(){
 
     private lateinit var gameSettings: GameSettings
-    private lateinit var level: Level
 
-    private val context = application
 
     private val repository = GameRepositoryImpl
 
@@ -66,8 +68,12 @@ class GameVieModel(application: Application) : AndroidViewModel(application){
      private var countOfRightAnswer = 0
      private var countOfQuestion = 0
 
-    fun startGame(level: Level) {
-        getGameSettings(level)
+    init {
+        startGame()
+    }
+
+    private fun startGame() {
+        getGameSettings()
         startTimer()
         generatedQuestion()
         updateProgress()
@@ -83,7 +89,7 @@ class GameVieModel(application: Application) : AndroidViewModel(application){
         val percent = calculatePercentOfRightAnswers()
         _percentOfRightAnswer.value = percent
         _progressAnswers.value = String.format(
-            context.resources.getString(R.string.progress_answers),
+            application.resources.getString(R.string.progress_answers),
             countOfRightAnswer.toString(),
             gameSettings.minCountOfRightAnswers.toString()
         )
@@ -106,8 +112,7 @@ class GameVieModel(application: Application) : AndroidViewModel(application){
         countOfQuestion++
     }
 
-    private fun getGameSettings(level: Level) {
-        this.level = level
+    private fun getGameSettings() {
         this.gameSettings = getGameSettingsUseCase(level)
         _minPercent.value = gameSettings.minPercentOfRightAnswers
     }
