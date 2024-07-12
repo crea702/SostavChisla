@@ -9,19 +9,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import com.example.sostavchisla.R
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.sostavchisla.databinding.FragmentGameBinding
 import com.example.sostavchisla.domain.Entity.GameResult
-import com.example.sostavchisla.domain.Entity.Level
+
 
 
 class GameFragment : Fragment() {
 
+    private val args by navArgs<GameFragmentArgs>()
+
     private lateinit var binding: FragmentGameBinding
-    private lateinit var level: Level
 
     private val viewModelFactory by lazy {
-        GameViewModelFactory(level,requireActivity().application)
+        GameViewModelFactory(args.level,requireActivity().application)
     }
     private val viewModel: GameVieModel by lazy{
         ViewModelProvider(this, viewModelFactory) [GameVieModel::class.java]
@@ -36,11 +38,6 @@ class GameFragment : Fragment() {
             add(binding.tvOption5)
             add(binding.tvOption6)
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        parseArgs()
     }
 
     override fun onCreateView(
@@ -112,28 +109,14 @@ class GameFragment : Fragment() {
     }
 
     private fun launchGameFinishedFragment(gameResult: GameResult) {
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, GameFinishedFragment.newInstance(gameResult))
-            .addToBackStack(null)
-            .commit()
 
+        findNavController().navigate(
+            GameFragmentDirections.actionGameFragmentToGameFinishedFragment(gameResult)
+        )
     }
 
-    private fun parseArgs() {
-        level = requireArguments().getSerializable(KEY_LEVEL) as Level
-    }
 
     companion object{
-
-        private const val KEY_LEVEL = "level"
-        const val NAME ="GameFragment"
-
-        fun newInstance(level: Level): GameFragment{
-            return GameFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(KEY_LEVEL, level)
-                }
-            }
-        }
+        const val KEY_LEVEL = "level"
     }
 }
